@@ -28,24 +28,25 @@ public class Program8 {
 			
 			String sql="Insert into employee(id,name,email,dept,salary)values(?,?,?,?,?)";
 			
+			PreparedStatement pstmt=con.prepareStatement(sql);
+			
+			Program2.displayEmployee(pstmt);
 			
 			System.out.println("Enter the id :");
-			int idNo=scan.nextInt();
-			scan.nextLine();
+			int idNo=scan.nextInt();			
 			
 			System.out.print("enter the name of the person:");
-			String employeeName=scan.nextLine();
+			String employeeName=scan.next();
 			
 			System.out.print("enter the email of the person:");
-			String employeeEmail=scan.nextLine();
+			String employeeEmail=scan.next();
 			
 			System.out.print("enter the department of the person:");
-			String departmentName=scan.nextLine();
+			String departmentName=scan.next();
 			
 			System.out.print("enter the salary of the person:");
 			int employeeSalary=scan.nextInt();
 			
-			PreparedStatement pstmt=con.prepareStatement(sql);
 			
 			pstmt.setInt(1,idNo);
 			
@@ -60,6 +61,8 @@ public class Program8 {
 			int n =pstmt.executeUpdate();
 			
 			System.out.println(n);
+			
+			Program2.displayEmployee(pstmt);
 			
 			
 		} catch (ClassNotFoundException e) {

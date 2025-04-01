@@ -11,13 +11,13 @@ import java.sql.Statement;
 
 public class Program2 {
 
-	
-	static Connection con= null;
-	
-	static Statement stmt= null; 
-	static ResultSet res= null;
 	public static void main(String[] args) {
 		
+		Statement stmt= null; 
+		
+		Connection con= null;
+		
+		ResultSet res= null;
 		
 		
 		String url="jdbc:mysql://localhost:3306/jdbc-ajay";
@@ -30,7 +30,11 @@ public class Program2 {
 			
 			stmt=con.createStatement();
 			
-		displayEmployee(con);
+		
+		res = displayEmployee(stmt);
+		
+		
+		
 			
 		} catch (ClassNotFoundException e) {
 		
@@ -43,54 +47,65 @@ public class Program2 {
 		
 		finally
 		{
-			if(con!=null)
-			{
-				try {
-					con.close();
-				} catch (SQLException e) {
-				
-					e.printStackTrace();
-				}
-			}
-			
-			if(stmt!=null)
-			{
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
-			}
-			
-			if(res!=null)
-			{
-				try {
-					res.close();
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				}
-			}
+			myCloseMethod(stmt, con, res);
 		}
 
 	}
 
-	public static void displayEmployee(Connection con) throws SQLException {
+	public static ResultSet displayEmployee(Statement stmt) throws SQLException {
+		
+		ResultSet res;
 		res=stmt.executeQuery("Select * from `employee`");
+		
+		
+		System.out.println("------------------------------------------------------");
 		
 		while(res.next())
 		{
 			int id=res.getInt("id");
-			String name=res.getString("name");
+			String name=res.getString("Name");
 			String email=res.getString("email");
-			String dept= res.getString("dept");
+			String dept=res.getString("dept");
 			int salary=res.getInt("salary");
 			
-			System.out.println(id+" "+name+" "+email+" "+dept+" "+salary);
-		
+			System.out.printf("|%-6d|%-15s|%-20s|%-15s|%-10d|\n",id,name,email,dept,salary);
 		}
 		
+		System.out.println("-------------------------------------------------------");
+		return res;
 	}
 
+	private static void myCloseMethod(Statement stmt, Connection con, ResultSet res) {
+		if(con!=null)
+		{
+			try {
+				con.close();
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+		}
+		
+		if(stmt!=null)
+		{
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+		if(res!=null)
+		{
+			try {
+				res.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+	}
+
+	
 }

@@ -29,6 +29,10 @@ public class Program7 {
 				
 				String Sql="update`employee` set `salary`=`salary`+ ? where `dept`=?";
 				
+				PreparedStatement pstmt=con.prepareStatement(Sql);
+								
+				Program2.displayEmployee(pstmt);
+				
 				System.out.println("Enter the increment salary :");
 				
 				int inc= scan.nextInt();
@@ -36,8 +40,6 @@ public class Program7 {
 				System.out.println("Enter the department name:");
 				
 				String department=scan.next();
-				
-				PreparedStatement pstmt=con.prepareStatement(Sql);
 				
 				
 				pstmt.setInt(1, inc);
@@ -49,24 +51,9 @@ public class Program7 {
 				System.out.println(n);
 				
 				
-				ResultSet res=pstmt.executeQuery();
+			
 				
-				
-				System.out.println("------------------------------------------------------");
-				
-				while(res.next())
-				{
-					int id=res.getInt("id");
-					String name=res.getString("Name");
-					String email=res.getString("email");
-					String dept=res.getString("dept");
-					int salary=res.getInt("salary");
-					
-					System.out.printf("|%-3d|%-10s|%-20s|%-10s|%-7d|\n",id,name,email,dept,salary);
-				}
-				
-				System.out.println("-------------------------------------------------------");
-				
+				Program2.displayEmployee(pstmt);
 				
 				
 				
